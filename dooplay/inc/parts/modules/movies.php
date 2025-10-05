@@ -11,17 +11,17 @@
 */
 
 // Compose data MODULE
-$sldr = doo_is_true('moviemodcontrol','slider');
+$sldr = false;
 $auto = doo_is_true('moviemodcontrol','autopl');
 $orde = dooplay_get_option('moviemodorderby','date');
 $ordr = dooplay_get_option('moviemodorder','DESC');
-$pitm = dooplay_get_option('movieitems','10');
+$pitm = 12;
 $titl = dooplay_get_option('movietitle','Movies');
 $maxwidth = dooplay_get_option('max_width','1200');
 $maxwidth = ($maxwidth >= 1400 && !$sldr) ? 'full' : 'normal';
 $pmlk = get_post_type_archive_link('movies');
 $totl = doo_total_count('movies');
-$eowl = ($sldr == true) ? 'id="dt-movies" ' : false;
+$eowl = ($sldr == true) ? 'id="dt-movies"' : '';
 
 // Compose Query
 $query = array(
@@ -44,6 +44,6 @@ $query = array(
 	<span><?php echo $totl; ?> <a href="<?php echo $pmlk; ?>" class="see-all"><?php _d('See all'); ?></a></span>
 </header>
 <div id="movload" class="load_modules"><?php _d('Loading..'); ?></div>
-<div <?php echo $eowl; ?>class="items <?php echo $maxwidth; ?>">
+<div <?php echo $eowl; ?>class="items <?php echo $maxwidth; ?> movie-grid">
 	<?php query_posts($query); while(have_posts()){ the_post(); get_template_part('inc/parts/item'); } wp_reset_query(); ?>
 </div>

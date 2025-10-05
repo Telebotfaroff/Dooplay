@@ -10,3 +10,21 @@ License: License Limited
 License URI: http://doothemes.com/license-limited/
 Tags: theme-options, one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-header, custom-menu, full-width-template
 */
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 992px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
