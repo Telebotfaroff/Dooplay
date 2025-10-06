@@ -49,7 +49,7 @@ class DooNotices{
     public function activate_license(){
         $out  = '<div class="notice notice-info is-dismissible"><p>';
     	$out .= '<span class="dashicons dashicons-warning" style="color: #00a0d2"></span> ';
-        $out .= __d('Invalid license, it is possible that some of the options may not work correctly'). ', '.'<a href="'. admin_url('themes.php?page=dooplay-license').'"><strong>'. __d('here'). '</strong></a>';
+        $out .= __d('.'). ', '.'<a href="'. admin_url('themes.php?page=dooplay-license').'"><strong>'. __d('here'). '</strong></a>';
         $out .= '</p></div>';
         echo $out;
     }

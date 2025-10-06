@@ -15,7 +15,7 @@ $sldr = doo_is_true('tvmodcontrol','slider');
 $auto = doo_is_true('tvmodcontrol','autopl');
 $orde = dooplay_get_option('tvmodorderby','date');
 $ordr = dooplay_get_option('tvmodorder','DESC');
-$pitm = 12;
+$pitm = 24;
 $titl = dooplay_get_option('tvtitle','TV Shows');
 $maxwidth = dooplay_get_option('max_width','1200');
 $maxwidth = ($maxwidth >= 1400 && !$sldr) ? 'full' : 'normal';

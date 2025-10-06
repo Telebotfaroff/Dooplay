@@ -1,3 +1,4 @@
+
 /*
 Theme Name: DooPlay
 Version: 2.5.5
@@ -13,7 +14,7 @@ Tags: theme-options, one-column, two-columns, three-columns, right-sidebar, left
 
 .movie-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
@@ -27,4 +28,10 @@ Tags: theme-options, one-column, two-columns, three-columns, right-sidebar, left
   .movie-grid {
     grid-template-columns: repeat(1, 1fr);
   }
+}
+
+.home .content.full {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
 }
