@@ -11,7 +11,7 @@
 */
 
 // Compose data MODULE
-$sldr = doo_is_true('tvmodcontrol','slider');
+$sldr = false;
 $auto = doo_is_true('tvmodcontrol','autopl');
 $orde = dooplay_get_option('tvmodorderby','date');
 $ordr = dooplay_get_option('tvmodorder','DESC');
@@ -21,7 +21,7 @@ $maxwidth = dooplay_get_option('max_width','1200');
 $maxwidth = ($maxwidth >= 1400 && !$sldr) ? 'full' : 'normal';
 $pmlk = get_post_type_archive_link('tvshows');
 $totl = doo_total_count('tvshows');
-$eowl = ($sldr == true) ? 'id="dt-tvshows" ' : false;
+$eowl = ($sldr == true) ? 'id="dt-tvshows"' : '';
 
 // Compose Query
 $query = array(
@@ -44,6 +44,6 @@ $query = array(
 	<span><?php echo $totl; ?> <a href="<?php echo $pmlk; ?>" class="see-all"><?php _d('See all'); ?></a></span>
 </header>
 <div id="tvload" class="load_modules"><?php _d('Loading..'); ?></div>
-<div <?php echo $eowl?>class="items <?php echo $maxwidth; ?>">
+<div <?php echo $eowl; ?>class="items <?php echo $maxwidth; ?> movie-grid">
 	<?php query_posts($query); while(have_posts()){ the_post(); get_template_part('inc/parts/item'); } wp_reset_query(); ?>
 </div>

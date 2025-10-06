@@ -66,10 +66,6 @@ class Doothemes {
 	 * @version 1.1
 	 */
 	function updater() {
-
-		if(get_option( $this->theme_slug . '_license_key_status', false) != 'valid'){
-			return;
-		}
 		if(!class_exists('Doothemes_updater')){
 			get_template_part('inc/core/doothemes/updater');
 		}
@@ -77,7 +73,7 @@ class Doothemes {
 			array(
 				'remote_api_url' 	=> $this->remote_api_url,
 				'version' 			=> $this->version,
-				'license' 			=> trim(get_option( $this->theme_slug.'_license_key')),
+				'license' 			=> 'valid',
 				'item_name' 		=> $this->item_name,
 				'author'			=> $this->author
 			),
@@ -213,17 +209,8 @@ class Doothemes {
  	 * @version 1.1
  	 */
 	function activate_license() {
-		$license = trim(get_option($this->theme_slug.'_license_key'));
-		$api_params = array(
-			'edd_action' => 'activate_license',
-			'license'    => $license,
-			'item_name'  => urlencode( $this->item_name )
-		);
-		$license_data = $this->get_api_response( $api_params );
-		if ( $license_data && isset( $license_data->license ) ) {
-			update_option( $this->theme_slug . '_license_key_status', $license_data->license );
-			delete_transient( $this->theme_slug . '_license_message');
-		}
+		update_option( $this->theme_slug . '_license_key_status', 'valid' );
+		delete_transient( $this->theme_slug . '_license_message');
 	}
 
 	/**
@@ -231,17 +218,8 @@ class Doothemes {
 	 * @version 1.1
 	 */
 	function deactivate_license() {
-		$license = trim( get_option( $this->theme_slug . '_license_key') );
-		$api_params = array(
-			'edd_action' => 'deactivate_license',
-			'license'    => $license,
-			'item_name'  => urlencode( $this->item_name )
-		);
-		$license_data = $this->get_api_response( $api_params );
-		if ( $license_data && ( $license_data->license == 'deactivated') ) {
-			delete_option( $this->theme_slug . '_license_key_status');
-			delete_transient( $this->theme_slug . '_license_message');
-		}
+		delete_option( $this->theme_slug . '_license_key_status');
+		delete_transient( $this->theme_slug . '_license_message');
 	}
 
 	/**
@@ -286,63 +264,9 @@ class Doothemes {
 	 * @version 1.1
 	 */
 	function check_license() {
-		$license = trim( get_option( $this->theme_slug . '_license_key') );
+		update_option( $this->theme_slug . '_license_key_status', 'valid' );
 		$strings = $this->strings;
-		$api_params = array(
-			'edd_action' => 'check_license',
-			'license'    => $license,
-			'item_name'  => urlencode( $this->item_name ),
-			'url'        => home_url()
-		);
-		$license_data = $this->get_api_response( $api_params );
-		if ( !isset( $license_data->license ) ) {
-			$message = $strings['license-unknown'];
-			return $message;
-		}
-		if ( $license_data && isset( $license_data->license ) ) {
-			update_option( $this->theme_slug . '_license_key_status', $license_data->license );
-		}
-		$expires = false;
-
-		if ( isset( $license_data->expires ) ) {
-			$expires = date_i18n( get_option('date_format'), strtotime( $license_data->expires ) );
-			$renew_link = '<a href="' . esc_url( $this->get_renewal_link() ) . '" target="_blank">' . $strings['renew'] . '</a>';
-		}
-		$site_count = $license_data->site_count;
-		$license_limit = $license_data->license_limit;
-		if ( 0 == $license_limit ) {
-			$license_limit = $strings['unlimited'];
-		}
-		if ( $license_data->license == 'valid') {
-			$message = $strings['license-key-is-active'] . ' ';
-			if ( $expires ) {
-				$message .= sprintf( $strings['expires%s'], $expires ) . ' ';
-			}
-
-			if ( $site_count && $license_limit ) {
-				$message .= sprintf( $strings['%1$s/%2$-sites'], $site_count, $license_limit );
-			}
-		} else if ( $license_data->license == 'expired') {
-			if ( $expires ) {
-				$message = sprintf( $strings['license-key-expired-%s'], $expires );
-			} else {
-				$message = $strings['license-key-expired'];
-			}
-			if ( $renew_link ) {
-				$message .= ' ' . $renew_link;
-			}
-		} else if ( $license_data->license == 'invalid') {
-			$message = $strings['license-keys-do-not-match'];
-		} else if ( $license_data->license == 'inactive') {
-			$message = $strings['license-is-inactive'];
-		} else if ( $license_data->license == 'disabled') {
-			$message = $strings['license-key-is-disabled'];
-		} else if ( $license_data->license == 'site_inactive') {
-			$message = $strings['site-is-inactive'];
-		} else {
-			$message = $strings['license-status-unknown'];
-		}
-		return $message;
+		return $strings['license-key-is-active'];
 	}
 
 	/**
