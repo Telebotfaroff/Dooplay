@@ -15,7 +15,7 @@ $sldr = false;
 $auto = doo_is_true('moviemodcontrol','autopl');
 $orde = dooplay_get_option('moviemodorderby','date');
 $ordr = dooplay_get_option('moviemodorder','DESC');
-$pitm = 12;
+$pitm = 24;
 $titl = dooplay_get_option('movietitle','Movies');
 $maxwidth = dooplay_get_option('max_width','1200');
 $maxwidth = ($maxwidth >= 1400 && !$sldr) ? 'full' : 'normal';
