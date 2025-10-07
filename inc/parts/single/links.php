@@ -33,8 +33,6 @@
         						<th><?php _d('Type'); ?></th>
         						<th><?php _d('URL'); ?></th>
         						<th><?php _d('Quality'); ?></th>
-        						<th><?php _d('Language'); ?></th>
-        						<th><?php _d('File size'); ?></th>
         						<th></th>
         					</tr>
         				</thead>
@@ -54,14 +52,6 @@
         							</select>
         						</td>
         						<td>
-        							<select name="lang">
-        							    <?php foreach( DooLinks::langs() as $lang) { echo "<option>{$lang}</option>"; } ?>
-        							</select>
-        						</td>
-        						<td>
-        							<input name="size" type="text" class="size">
-        						</td>
-        						<td>
         							<a data-repeater-delete class="remove_row">X</a>
         						</td>
         					</tr>
@@ -71,7 +61,7 @@
         		</div>
         		<div class="control">
         			<div class="left"><a data-repeater-create id="add_row" class="add_row">+ <?php _d('Add row'); ?></a></div>
-        			<div class="right"><input type="submit" value="<?php _d('Send link(s)'); ?>"></div>
+        			<div class="right"><input type="submit" style="padding: 10px 20px; font-size: 16px;" value="<?php _d('Send link(s)'); ?>"></div>
         		</div>
         		<input type="hidden" name="post_id" value="<?php the_id(); ?>">
                 <input type="hidden" name="nonce" value="<?php echo wp_create_nonce('doolinks'); ?>">
