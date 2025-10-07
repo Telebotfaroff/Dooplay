@@ -1,3 +1,12 @@
+<?php
+// Secure file
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Admins and Editors
+if ( current_user_can('administrator') || current_user_can('editor') ) {
+?>
 <div class="box_links">
     <?php if(doo_here_links($post->ID)){ ?>
     <div class="linktabs">
@@ -71,3 +80,32 @@
     </div>
     <?php } ?>
 </div>
+<?php 
+} else {
+// Viewers
+?>
+<div class="dbtn">
+<?php
+    global $wpdb;
+    $download_links = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT ID FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'dt_links' AND post_status = 'publish'",
+            $post->ID
+        )
+    );
+
+    if ( $download_links ) {
+        foreach ( $download_links as $link ) {
+            $type = get_post_meta( $link->ID, '_dool_type', true );
+            if ( $type == __d('Download') ) {
+                $url = get_permalink( $link->ID );
+                echo '<a class="btn black" href="' . esc_url( $url ) . '">Download</a>';
+                break; // Show only the first download link
+            }
+        }
+    }
+?>
+</div>
+<?php
+}
+?>
