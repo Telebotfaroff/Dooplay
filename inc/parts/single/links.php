@@ -83,8 +83,9 @@ if ( current_user_can('administrator') || current_user_can('editor') ) {
 <?php 
 } else {
 // Viewers
+$main_color = dooplay_get_option('maincolor', '#408bea');
 ?>
-<div class="dbtn">
+<div class="dbtn" style="background-color: <?php echo $main_color; ?>; padding: 20px; text-align: center; border-radius: 5px; margin-top: 20px;">
 <?php
     global $wpdb;
     $download_links = $wpdb->get_results(
@@ -95,14 +96,21 @@ if ( current_user_can('administrator') || current_user_can('editor') ) {
     );
 
     if ( $download_links ) {
+        $found_link = false;
         foreach ( $download_links as $link ) {
             $type = get_post_meta( $link->ID, '_dool_type', true );
             if ( $type == __d('Download') ) {
                 $url = get_permalink( $link->ID );
-                echo '<a class="btn black" href="' . esc_url( $url ) . '">Download</a>';
+                echo '<a class="btn" style="font-size: 18px; padding: 15px 30px; background-color: #ffffff; color: '.$main_color.'; border-radius: 5px; text-decoration: none; font-weight: bold; border: 2px solid #fff;" href="' . esc_url( $url ) . '">'. __d('Download') .'</a>';
+                $found_link = true;
                 break; // Show only the first download link
             }
         }
+        if (!$found_link) {
+            echo '<p style="color: #ffffff; font-weight: bold;">' . __d('No download links available.') . '</p>';
+        }
+    } else {
+        echo '<p style="color: #ffffff; font-weight: bold;">' . __d('No download links available.') . '</p>';
     }
 ?>
 </div>
