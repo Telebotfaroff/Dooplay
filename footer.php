@@ -59,7 +59,7 @@ $copyright = isset($focopy) ? str_replace('{year}', date('Y'), $focopy) : $copyt
 	</div>
 </footer>
 </div>
-<?php wp_footer();  if( $focode ) echo stripslashes( $focode ). "\n"; ?>
+<?php wp_footer();  //if( $focode ) echo stripslashes( $focode ). "\n"; ?>
 <div id="oscuridad"></div>
 <?php if(is_single() == true AND get_post_type() != 'seasons' AND get_post_meta($post->ID, 'imagenes', true) ) { ?>
 <div id="blueimp-gallery" class="blueimp-gallery">

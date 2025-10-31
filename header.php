@@ -39,7 +39,7 @@ $logo = ($logo) ? "<img src='{$logo}' alt='{$bnme}'/>" : "<img src='".DOO_URI."/
 <?php get_template_part('inc/doo_seo'); ?>
 <?php if(is_single()) { doo_facebook_image("w780", $post->ID); } ?>
 <?php wp_head(); ?>
-<?php echo stripslashes($hcod); ?>
+<?php /* echo stripslashes($hcod); */ ?>
 </head>
 <body <?php body_class(); ?>>
 <?php if(is_single() && is_user_logged_in()) { ?>
